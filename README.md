@@ -34,7 +34,7 @@ Na sua versão final, o módulo oferece uma solução prática e intuitiva para 
 
 - 🎨 **Interface Temática em Pixel Art:** Proporcionar uma experiência gráfica imersiva alinhada à paleta de cores oficial da Prosa Code.
 
-- 🧩 **Evolução Incremental em POO:** Partir de uma estrutura procedural básica e evoluir progressivamente para a aplicação prática de classes e objetos, coleções tipadas, encapsulamento, herança, polimorfismo, padrões arquiteturais (DAO/MVC), interface gráfica (JavaFX/FXML) e persistência de dados (arquivos e banco de dados relacional MySQL).
+- 🧩 **Evolução Incremental em POO:** Partir de uma estrutura procedural básica e evoluir progressivamente para a aplicação prática de classes e objetos, coleções tipadas, encapsulamento, construtores, herança, polimorfismo, padrões arquiteturais (DAO/MVC), interface gráfica (JavaFX/FXML) e persistência de dados (arquivos e banco de dados relacional MySQL).
 
 ---
 
@@ -54,40 +54,64 @@ Cada versão introduz novos conceitos, estruturas de dados e melhorias arquitetu
 | **`v2.1.0`** | Arquivo TXT (I/O Java) | Persistência de dados em arquivo texto utilizando `java.io` |
 | **`v3.0.0`** | Classes e Objetos | Introdução à Programação Orientada a Objetos com a criação da classe `Contato` |
 | **`v3.1.0`** | Coleção de Objetos | Armazenamento de objetos `Contato` utilizando `List<Contato>` |
-| **`v3.2.0`** *(Atual)* | CRUD Orientado a Objetos | Adaptação das operações CRUD e da persistência para utilizar `List<Contato>` |
+| **`v3.2.0`** | CRUD Orientado a Objetos | Adaptação das operações CRUD e da persistência para utilizar `List<Contato>` |
+| **`v3.3.0`** *(Atual)* | Encapsulamento | Encapsulamento e melhoria da modelagem da classe `Contato` |
 
-### 📌 Versão Atual: `v3.2.0` — CRUD Orientado a Objetos
-Evolução das operações da Agenda de Contatos para trabalhar diretamente com objetos da classe `Contato`. Nesta versão, as três listas independentes utilizadas para armazenar nomes, celulares e e-mails são substituídas por uma única coleção `List<Contato>`, e todas as operações do CRUD e da persistência passam a manipular diretamente esses objetos.
+### 📌 Versão Atual: `v3.3.0` — Encapsulamento e Modelagem da Classe
+Evolução da classe `Contato` para proteger seu estado interno e controlar o acesso aos seus atributos, concluindo a etapa inicial de fundamentos de Programação Orientada a Objetos.
 
 - **Principais Características e Conceitos:**
-  - Eliminação das listas paralelas de `String` e unificação em `List<Contato>` em todo o CRUD (`adicionar`, `listar`, `pesquisar`, `atualizar` e `excluir`);
-  - Criação de um novo objeto `Contato` para cada cadastro e percurso da coleção utilizando `for-each`;
-  - Pesquisa de contatos por meio dos atributos dos objetos e manipulação direta do estado via referências;
-  - Adaptação da classe `Persistencia` para reconstruir objetos `Contato` na leitura e gravá-los no formato `nome;celular;email` em `contatos.txt`.
+  - Introdução ao **encapsulamento** com o modificador de acesso `private` nos atributos `nome`, `celular` e `email`;
+  - Leitura e alteração controladas do estado dos objetos por meio de métodos **getters** e **setters**;
+  - Criação de **construtor com parâmetros** e utilização da palavra-chave `this` para diferenciar atributos de parâmetros;
+  - Adaptação das operações CRUD e da classe `Persistencia` para utilizar getters, setters e o construtor na reconstrução dos objetos, eliminando o acesso direto aos atributos fora de `Contato`.
 
 ```java
-// Estrutura principal e instanciação de contato
+// Estrutura principal e instanciação com construtor
 List<Contato> contatos = new ArrayList<>();
-
-Contato contato = new Contato();
-contato.nome = nome;
-contato.celular = celular;
-contato.email = email;
-contatos.add(contato);
-
-// Operações compartilhando a coleção de objetos
-Agenda.adicionar(sc, contatos);
-Agenda.listar(contatos);
-Agenda.pesquisar(sc, contatos);
-Agenda.atualizar(sc, contatos);
-Agenda.excluir(sc, contatos);
-
-// Persistência orientada a objetos
-Persistencia.carregarContatos(contatos);
-Persistencia.salvarContatos(contatos);
+Contato contato = new Contato(nome, celular, email);
 ```
 
-#### Arquitetura da Versão Atual (`v3.2.0`)
+```java
+public class Contato {
+
+    private String nome;
+    private String celular;
+    private String email;
+
+    public Contato(String nome, String celular, String email) {
+        this.nome = nome;
+        this.celular = celular;
+        this.email = email;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+```
+
+#### Arquitetura da Versão Atual (`v3.3.0`)
 
 ```text
 Principal
@@ -106,16 +130,12 @@ Principal
                   └── salvarContatos()
 ```
 
-```java
-public class Contato {
-    public String nome;
-    public String celular;
-    public String email;
-}
-```
-> *Nota:* Neste momento, os atributos permanecem públicos propositalmente; o encapsulamento será introduzido na próxima etapa.
+> *Formato de persistência em `contatos.txt`:* `nome;celular;email`
 
 ### 📜 Histórico de Versões
+
+#### `v3.2.0` — CRUD Orientado a Objetos
+Evolução das operações da Agenda e da persistência para trabalhar diretamente com objetos `Contato` em uma única coleção `List<Contato>`, eliminando as listas paralelas de `String` e reconstruindo objetos na leitura de `contatos.txt`.
 
 #### `v3.1.0` — Coleção de Objetos
 Evolução da representação dos contatos utilizando `List<Contato>` com `ArrayList` e Generics.
@@ -151,8 +171,8 @@ Evolução para armazenar vários contatos com capacidade fixa utilizando arrays
 Primeira versão procedural em console utilizando `Scanner`, estruturas condicionais, estruturas de repetição, menu de opções e armazenamento de apenas um contato em memória.
 
 ### 🗺️ Próxima Evolução (Roadmap)
-- **`v3.3.0` — Encapsulamento e Modelagem da Classe:** Evolução da classe `Contato` com modificadores de acesso e métodos para controlar o acesso e a modificação do estado dos objetos.
-- **Versões Posteriores:** Construtores, padrões **DAO** e **MVC**, interface gráfica (**JavaFX/FXML**), integração **JDBC** e banco de dados **MySQL**.
+- **`V4` — Padrão DAO:** Separação da lógica de acesso aos dados, preparando a aplicação para evoluções futuras nos mecanismos de persistência.
+- **Versões Posteriores:** Padrão **MVC**, interface gráfica (**JavaFX/FXML**), integração **JDBC** e banco de dados **MySQL**.
 
 ### 🏷️ Controle de Versões
 As entregas estáveis do projeto são identificadas no repositório por meio de **tags Git**:
@@ -173,6 +193,7 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
   - v3.0.0
   - v3.1.0
   - v3.2.0
+  - v3.3.0
 ```
 
 ---
@@ -181,7 +202,7 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
 
 | Categoria | Tecnologia | Descrição |
 | :--- | :--- | :--- |
-| **Linguagem** | Java 17+ | Linguagem principal orientada a objetos |
+| **Linguagem** | Java 17+ | Linguagem principal orientada a objetos (POO, encapsulamento, construtores) |
 | **Coleções** | Java Collections Framework | Estruturas dinâmicas (`List` e `ArrayList`) |
 | **Persistência em Arquivo** | Java I/O (`java.io`) | Leitura e gravação de contatos em arquivos `.txt` |
 | **Interface Gráfica** | JavaFX (FXML) | Construção das telas e componentes visuais (`02-agenda-contatos.fxml`) |

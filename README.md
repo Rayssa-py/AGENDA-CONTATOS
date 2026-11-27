@@ -1,126 +1,100 @@
-# 📞 Agenda de Contatos — Prosa Code
+# Agenda de Contatos
 
-> *"Conectando pessoas, ideias e histórias através do código."* ☕📖
+Projeto didático desenvolvido em Java para acompanhar a evolução dos conceitos trabalhados na disciplina de Programação Orientada a Objetos.
 
-**Startup:** Prosa Code  
-**Disciplina:** Programação Orientada a Objetos (POO) — IFCE  
-**Docente:** Prof. Roger Moura Sarmento  
+O sistema é desenvolvido de forma incremental. Cada versão introduz novos conceitos, estruturas e melhorias sobre a versão anterior.
 
-![Java](https://img.shields.io/badge/Java-17-47232C?style=for-the-badge&logo=openjdk&logoColor=D2E7AA)
-![JavaFX](https://img.shields.io/badge/Interface-JavaFX-66997B?style=for-the-badge&logo=java&logoColor=white)
-![MySQL](https://img.shields.io/badge/Banco_de_Dados-MySQL-A4CA8B?style=for-the-badge&logo=mysql&logoColor=27081D)
-![License](https://img.shields.io/badge/Licen%C3%A7a-MIT-27081D?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Em_Desenvolvimento-66997B?style=for-the-badge)
+## Objetivo
 
----
+Construir uma Agenda de Contatos completa, iniciando com uma solução procedural simples e evoluindo gradualmente para uma aplicação organizada com conceitos de Programação Orientada a Objetos, interface gráfica e persistência de dados.
 
-## 📝 Descrição
-
-A **Agenda de Contatos** é um módulo desktop de gestão de contatos pessoais e profissionais desenvolvido como parte do ecossistema de sistemas da **Prosa Code**, além de atuar como um projeto didático incremental para acompanhar a evolução dos conceitos trabalhados na disciplina de **Programação Orientada a Objetos (POO)**.
-
-O sistema é desenvolvido de forma incremental — iniciando com uma solução procedural simples em console e evoluindo gradualmente, versão a versão, para uma aplicação completa organizada com princípios de POO, persistência relacional e uma interface gráfica rica em estilo *pixel art*, inspirada na estética botânica e acolhedora de cafés.
-
-Na sua versão final, o módulo oferece uma solução prática e intuitiva para organização de rede de contatos, permitindo a filtragem rápida por categorias (*Favoritos*, *Amigos*, *Família*, *Trabalho*), busca dinâmica e navegação por índice alfabético (A-Z).
-
----
-
-## 🎯 Objetivos
-
-- 📇 **Gestão de Contatos:** Registrar, atualizar, consultar e remover contatos da agenda de forma simples e intuitiva.
-
-- 🗂️ **Categorização Prática:** Organizar registros em grupos definidos (*Todos*, *Favoritos*, *Amigos*, *Família* e *Trabalho*).
-
-- 🔍 **Busca e Navegação Ágil:** Oferecer barra de pesquisa dinâmica por nome/telefone e filtro lateral por índice alfabético (A, B, C, D...).
-
-- 🎨 **Interface Temática em Pixel Art:** Proporcionar uma experiência gráfica imersiva alinhada à paleta de cores oficial da Prosa Code.
-
-- 🧩 **Evolução Incremental em POO:** Partir de uma estrutura procedural básica e evoluir progressivamente para a aplicação prática de encapsulamento, herança, polimorfismo, padrões arquiteturais (DAO/MVC), interface gráfica (JavaFX/FXML) e persistência de dados via JDBC com MySQL.
-
----
-
-## 🚀 Evolução do Projeto
-
-Cada versão introduz novos conceitos, estruturas de dados e melhorias arquiteturais sobre a entrega anterior:
+## Evolução do projeto
 
 | Versão | Armazenamento | Descrição |
-| :--- | :--- | :--- |
-| **`v0.0.0`** | Variáveis simples | Permite armazenar apenas um contato |
-| **`v0.1.0`** | Arrays | Permite vários contatos com capacidade fixa |
-| **`v0.2.0`** *(Atual)* | List + ArrayList | Permite vários contatos com tamanho dinâmico |
+|---|---|---|
+| v0.0.0 | Variáveis simples | Permite armazenar apenas um contato |
+| v0.1.0 | Arrays | Permite vários contatos com capacidade fixa |
+| v0.2.0 | List + ArrayList | Permite vários contatos com tamanho dinâmico |
+| v0.3.0 | List + ArrayList | Adiciona a opção de alteração de contatos cadastrados |
 
-### 📌 Versão Atual: `v0.2.0` — Armazenamento com `List` e `ArrayList`
-Nesta etapa, a Agenda de Contatos passou a utilizar a API de Coleções do Java (`List` e `ArrayList`) para o armazenamento dinâmico de contatos.
+### v0.0.0 — Programação Procedural Básica
 
-- **Principais Conceitos:**
-  - Interface `List` e classe `ArrayList`;
-  - Generics (`<String>`);
-  - Alocação e redimensionamento dinâmico;
-  - Métodos da API (`add`, `get`, `remove`, `size`, `indexOf`, etc.);
-  - Iteração com `for-each`;
-  - Simplificação das operações de inserção, busca e remoção.
+Primeira versão da Agenda.
 
-### 📜 Histórico de Versões
+Principais características:
 
-#### `v0.1.0` — Arrays e Capacidade Fixa
-Segunda versão da Agenda, expandindo a capacidade de armazenamento em memória.
-- **Armazenamento:** Uso de arrays simples (`String[]`) para cada atributo com capacidade máxima pré-definida.
-- **Manipulação:** Controle através de índices e estrutura `for`.
-- **Operações:** Busca sequencial nos arrays e remoção de elementos com reorganização física (deslocamento de itens).
+- uma única classe `Principal`;
+- todo o código dentro do método `main()`;
+- armazenamento de apenas um contato;
+- variáveis `nome`, `celular` e `email`;
+- menu em console;
+- uso de `Scanner`;
+- uso de `if-else`;
+- uso de `switch-case`;
+- uso de `while`;
+- funcionalidades:
+  - adicionar contato;
+  - listar contato;
+  - procurar contato;
+  - excluir contato;
+  - sair.
 
-#### `v0.0.0` — Programação Procedural Básica
-Primeira versão funcional da agenda executada em console.
-- **Estrutura:** Uma única classe `Principal`, com todo o código concentrado no método `main()`.
-- **Armazenamento:** Variáveis simples (`nome`, `celular` e `email`) capazes de armazenar apenas **um contato** por vez (um novo registro sobrescreve o anterior).
-- **Recursos da Linguagem:** Entrada de dados com `Scanner`, estruturas condicionais (`if-else`, `switch-case`) e laço de repetição (`while`).
-- **Funcionalidades:** Adicionar contato, listar contato, procurar contato, excluir contato e sair.
+Nesta versão, um novo contato substitui o contato armazenado anteriormente.
 
-### 🗺️ Próximas Versões (Roadmap)
-- **`v0.3.0` e posteriores** — Modularização, introdução de classes e objetos, encapsulamento, padrões **DAO** e **MVC**, interface gráfica (**JavaFX**), integração **JDBC** e banco de dados **MySQL**.
+### v0.1.0 — Arrays e Capacidade Fixa
 
-### 🏷️ Controle de Versões
-As entregas estáveis do projeto são identificadas no repositório por meio de **tags Git**:
+Segunda versão da Agenda.
+
+Principais características:
+
+- uso de arrays simples (`String[]`) para cada atributo;
+- controle de capacidade máxima pré-definida;
+- manipulação através de índices e estrutura `for`;
+- busca sequencial nos arrays;
+- remoção de elementos com reorganização física do array (deslocamento de itens).
+
+### v0.2.0 — Armazenamento Dinâmico com ArrayList
+
+Terceira versão da Agenda.
+
+Principais características:
+
+- uso da API de Coleções do Java (`List` e `ArrayList`);
+- uso de Generics (`<String>`);
+- alocação e redimensionamento dinâmico;
+- métodos da API (`add`, `get`, `remove`, `size`, `indexOf`, etc.);
+- iteração com `for-each`;
+- simplificação das operações de inserção, busca e remoção.
+
+## Versão atual
+
+**v0.3.0**
+
+Nesta versão, a Agenda de Contatos recebeu a implementação da funcionalidade de **alteração de contatos**.
+
+### Principais características e conceitos
+
+- Nova opção no menu: **Alterar contato**
+- Busca do contato a ser alterado
+- Atualização dos dados nas listas (`List` / `ArrayList`) utilizando o método `set()`
+- Reutilização da lógica de validação/busca para localização do registro antes da modificação
+
+### Próximas versões
+
+O projeto continuará evoluindo.
+<!-- - `v0.1.0` — armazenamento com Arrays; -->
+<!-- - `v0.2.0` — armazenamento com List e ArrayList; -->
+<!-- - `v0.3.0` — funcionalidade de alterar contato; -->
+- `v0.4.0` e posteriores — modularização, introdução de classes e objetos, encapsulamento, DAO, MVC, Swing, JDBC e banco de dados.
+
+## Controle de versões
+
+As versões estáveis do projeto são identificadas por tags Git.
+
+Exemplo:
 
 ```text
 v0.0.0
 v0.1.0
 v0.2.0
-```
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-| Categoria | Tecnologia | Descrição |
-| :--- | :--- | :--- |
-| **Linguagem** | Java 17+ | Linguagem principal orientada a objetos |
-| **Interface Gráfica** | JavaFX (FXML) | Construção das telas e componentes visuais (`02-agenda-contatos.fxml`) |
-| **Banco de Dados** | MySQL | Armazenamento relacional dos contatos e categorias |
-| **Persistência** | JDBC | Conexão e execução de operações SQL nativas |
-| **Modelagem & Design** | Pixel Art UI / Scene Builder | Design visual temático e montagem dos componentes visuais |
-| **Controle de Versão** | Git / GitHub | Gestão do código-fonte, releases (tags) e documentação do repositório |
-
----
-
-## 📂 Organização do Projeto
-
-```text
-AGENDA_DE_CONTATOS/
-├── 📖 README.md
-├── ⚖️ LICENSE
-├── 🚫 .gitignore
-├── 💻 src/
-├── 🎨 resources/
-│   ├── 🔹 icons/
-│   └── 🖼️ images/
-├── 📚 docs/
-│   ├── 📐 uml/
-│   └── 🎨 ui-ux/
-│       ├── ✏️ wireframes/
-│       │   ├── 📖 README.md
-│       │   └── 📷 esboco-agenda.jpeg
-│       └── 🖼️ mockups/
-│           ├── 📖 README.md
-│           ├── 🖼️ agenda-contatos-v1.png
-│           └── 🖼️ agenda-contatos-v2.png
-└── 🗄️ database/
-```
+v0.3.0

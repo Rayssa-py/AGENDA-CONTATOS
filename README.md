@@ -47,18 +47,25 @@ Cada versão introduz novos conceitos, estruturas de dados e melhorias arquitetu
 | **`v0.0.0`** | Variáveis simples | Permite armazenar apenas um contato |
 | **`v0.1.0`** | Arrays | Permite vários contatos com capacidade fixa |
 | **`v0.2.0`** | List + ArrayList | Permite vários contatos com tamanho dinâmico |
-| **`v0.3.0`** *(Atual)* | List + ArrayList | Adiciona a opção de alteração de contatos cadastrados |
+| **`v0.3.0`** | List + ArrayList | Adiciona a opção de alteração de contatos cadastrados |
+| **`v1.0.0`** *(Atual)* | List + ArrayList | Modularização das funcionalidades em métodos |
 
-### 📌 Versão Atual: `v0.3.0` — Alteração de Contatos
-Nesta etapa, a Agenda de Contatos recebeu a implementação da funcionalidade de **alteração de contatos** cadastrados.
+### 📌 Versão Atual: `v1.0.0` — Modularização das Funcionalidades
+Nesta etapa, o projeto Agenda de Contatos foi reorganizado por meio da criação de métodos, mantendo as funcionalidades da `v0.3.0` enquanto reestrutura a organização interna do código.
 
-- **Principais Características e Conceitos:**
-  - Nova opção no menu: **Alterar contato**;
-  - Busca do contato a ser alterado;
-  - Atualização dos dados nas listas (`List` / `ArrayList`) utilizando o método `set()`;
-  - Reutilização da lógica de validação/busca para localização do registro antes da modificação.
+- **Principais Alterações:**
+  - Modularização do código procedural com criação dos métodos `adicionar()`, `listar()`, `pesquisar()`, `atualizar()` e `excluir()`;
+  - Simplificação do `switch-case` e organização das responsabilidades do método `main()`;
+  - Uso de parâmetros para compartilhar os dados entre os métodos.
+- **Armazenamento:** Os contatos continuam armazenados em três listas do tipo `List<String>` (`nomes`, `celulares` e `e-mails`).
+- **Conceitos Trabalhados:** Métodos, parâmetros, argumentos, retorno, `void`, escopo de variáveis, modularização e refatoração.
 
 ### 📜 Histórico de Versões
+
+#### `v0.3.0` — Alteração de Contatos
+Quarta versão da Agenda, adicionando edição de registros existentes.
+- **Funcionalidade:** Nova opção no menu (**Alterar contato**) com busca prévia do registro.
+- **Operações:** Atualização dos dados nas listas (`List` / `ArrayList`) utilizando o método `set()` e reutilização da lógica de validação/busca antes da modificação.
 
 #### `v0.2.0` — Armazenamento Dinâmico com ArrayList
 Terceira versão da Agenda, adotando coleções dinâmicas do Java.
@@ -79,16 +86,19 @@ Primeira versão funcional da agenda executada em console.
 - **Funcionalidades:** Adicionar contato, listar contato, procurar contato, excluir contato e sair.
 
 ### 🗺️ Próximas Versões (Roadmap)
-- **`v0.4.0` e posteriores** — Modularização, introdução de classes e objetos, encapsulamento, padrões **DAO** e **MVC**, interface gráfica (**JavaFX**), integração **JDBC** e banco de dados **MySQL**.
+- **Versões Posteriores** — Introdução de classes e objetos, encapsulamento, padrões **DAO** e **MVC**, interface gráfica (**JavaFX**), integração **JDBC** e banco de dados **MySQL**.
 
 ### 🏷️ Controle de Versões
 As entregas estáveis do projeto são identificadas no repositório por meio de **tags Git**:
 
 ```text
-v0.0.0
-v0.1.0
-v0.2.0
-v0.3.0
+- V0
+  - V0.0.0
+  - V0.1.0
+  - V0.2.0
+  - V0.3.0
+- V1
+  - V1.0.0
 ```
 
 ---

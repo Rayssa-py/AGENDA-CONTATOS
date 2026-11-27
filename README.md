@@ -34,7 +34,7 @@ Na sua versão final, o módulo oferece uma solução prática e intuitiva para 
 
 - 🎨 **Interface Temática em Pixel Art:** Proporcionar uma experiência gráfica imersiva alinhada à paleta de cores oficial da Prosa Code.
 
-- 🧩 **Evolução Incremental em POO:** Partir de uma estrutura procedural básica e evoluir progressivamente para a aplicação prática de classes e objetos, coleções tipadas, encapsulamento, construtores, herança, polimorfismo, padrões arquiteturais (DAO/MVC), interface gráfica (JavaFX/FXML) e persistência de dados (arquivos e banco de dados relacional MySQL).
+- 🧩 **Evolução Incremental em POO:** Partir de uma estrutura procedural básica e evoluir progressivamente para a aplicação prática de classes e objetos, coleções tipadas, encapsulamento, construtores, pacotes Java, padrões arquiteturais (DAO/MVC), interface gráfica (JavaFX/FXML) e persistência de dados (arquivos e banco de dados relacional MySQL).
 
 ---
 
@@ -55,99 +55,77 @@ Cada versão introduz novos conceitos, estruturas de dados e melhorias arquitetu
 | **`v3.0.0`** | Classes e Objetos | Introdução à Programação Orientada a Objetos com a criação da classe `Contato` |
 | **`v3.1.0`** | Coleção de Objetos | Armazenamento de objetos `Contato` utilizando `List<Contato>` |
 | **`v3.2.0`** | CRUD Orientado a Objetos | Adaptação das operações CRUD e da persistência para utilizar `List<Contato>` |
-| **`v3.3.0`** *(Atual)* | Encapsulamento | Encapsulamento e melhoria da modelagem da classe `Contato` |
+| **`v3.3.0`** | Encapsulamento | Encapsulamento e melhoria da modelagem da classe `Contato` |
+| **`v4.0.0`** *(Atual)* | DAO e Pacotes Java | Organização das classes em pacotes e centralização da persistência utilizando o padrão DAO |
 
-### 📌 Versão Atual: `v3.3.0` — Encapsulamento e Modelagem da Classe
-Evolução da classe `Contato` para proteger seu estado interno e controlar o acesso aos seus atributos, concluindo a etapa inicial de fundamentos de Programação Orientada a Objetos.
+### 📌 Versão Atual: `v4.0.0` — Introdução ao DAO e Organização em Pacotes
+Evolução da arquitetura da Agenda de Contatos por meio da distribuição das classes em pacotes Java conforme suas responsabilidades e da introdução do padrão **DAO (Data Access Object)**, substituindo a antiga classe `Persistencia` por `ContatoDAO`.
 
 - **Principais Características e Conceitos:**
-  - Introdução ao **encapsulamento** com o modificador de acesso `private` nos atributos `nome`, `celular` e `email`;
-  - Leitura e alteração controladas do estado dos objetos por meio de métodos **getters** e **setters**;
-  - Criação de **construtor com parâmetros** e utilização da palavra-chave `this` para diferenciar atributos de parâmetros;
-  - Adaptação das operações CRUD e da classe `Persistencia` para utilizar getters, setters e o construtor na reconstrução dos objetos, eliminando o acesso direto aos atributos fora de `Contato`.
+  - Organização das classes em pacotes (`principal`, `modelo`, `servico`, `dao` e `uteis`) com uso de `package` e `import`;
+  - Aplicação do **Princípio da Responsabilidade Única** e separação da lógica de acesso aos dados;
+  - Criação da classe `ContatoDAO` com os métodos `carregarContatos(contatos)` e `salvarContatos(contatos)` operando sobre `List<Contato>`;
+  - Preservação das funcionalidades do CRUD e do formato de armazenamento `nome;celular;email` em `contatos.txt`.
 
-```java
-// Estrutura principal e instanciação com construtor
-List<Contato> contatos = new ArrayList<>();
-Contato contato = new Contato(nome, celular, email);
+#### Estrutura de Pacotes e Responsabilidades (`v4.0.0`)
+
+```text
+src/
+└── br/
+    └── edu/
+        ├── principal/
+        │   └── Principal.java
+        ├── modelo/
+        │   └── Contato.java
+        ├── servico/
+        │   └── Agenda.java
+        ├── dao/
+        │   └── ContatoDAO.java
+        └── uteis/
+            └── Uteis.java
 ```
 
-```java
-public class Contato {
-
-    private String nome;
-    private String celular;
-    private String email;
-
-    public Contato(String nome, String celular, String email) {
-        this.nome = nome;
-        this.celular = celular;
-        this.email = email;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-}
-```
-
-#### Arquitetura da Versão Atual (`v3.3.0`)
+| Classe | Responsabilidade |
+| :--- | :--- |
+| **`Principal`** | Inicialização da aplicação e controle do fluxo de execução |
+| **`Contato`** | Representação e encapsulamento dos dados de um contato |
+| **`Agenda`** | Implementação das operações de gerenciamento (CRUD) dos contatos |
+| **`ContatoDAO`** | Leitura e gravação dos contatos em arquivo (`contatos.txt`) |
+| **`Uteis`** | Disponibilização de métodos auxiliares |
 
 ```text
 Principal
-    │
-    └── List<Contato>
-            │
-            ├── Agenda
-            │     ├── adicionar()
-            │     ├── listar()
-            │     ├── pesquisar()
-            │     ├── atualizar()
-            │     └── excluir()
-            │
-            └── Persistencia
-                  ├── carregarContatos()
-                  └── salvarContatos()
+   │
+   └── List<Contato>
+           │
+           ├── Agenda
+           │     ├── adicionar()
+           │     ├── listar()
+           │     ├── pesquisar()
+           │     ├── atualizar()
+           │     └── excluir()
+           │
+           └── ContatoDAO
+                 ├── carregarContatos()
+                 └── salvarContatos()
 ```
-
-> *Formato de persistência em `contatos.txt`:* `nome;celular;email`
 
 ### 📜 Histórico de Versões
 
+#### `v3.3.0` — Encapsulamento e Modelagem da Classe
+Proteção do estado interno da classe `Contato` com modificador `private`, métodos getters/setters e construtor parametrizado (`this`), eliminando o acesso direto aos atributos fora da classe.
+
 #### `v3.2.0` — CRUD Orientado a Objetos
-Evolução das operações da Agenda e da persistência para trabalhar diretamente com objetos `Contato` em uma única coleção `List<Contato>`, eliminando as listas paralelas de `String` e reconstruindo objetos na leitura de `contatos.txt`.
+Evolução das operações da Agenda e da persistência para trabalhar diretamente com objetos `Contato` em uma única coleção `List<Contato>`, eliminando as listas paralelas de `String`.
 
 #### `v3.1.0` — Coleção de Objetos
-Evolução da representação dos contatos utilizando `List<Contato>` com `ArrayList` e Generics.
-- **Conceitos Trabalhados:** Armazenamento com `add()`, recuperação com `get()`, percurso com `for-each`, referências de objetos em coleções e representação de cada contato como entidade completa.
+Evolução da representação dos contatos utilizando `List<Contato>` com `ArrayList` e Generics, percurso com `for-each` e referências de objetos em coleções.
 
 #### `v3.0.0` — Introdução a Classes e Objetos
-Início da transição da abordagem procedural para a **Programação Orientada a Objetos (POO)**.
-- **Modelagem:** Criação da classe `Contato` (`nome`, `celular`, `email`), instanciação com `new`, acesso a atributos, múltiplas instâncias, referência e estado de objeto.
+Início da transição para **Programação Orientada a Objetos (POO)** com a criação da entidade `Contato` (`nome`, `celular`, `email`) e instanciação via operador `new`.
 
 #### `v2.1.0` — Persistência em Arquivo TXT
-Introdução da persistência de dados em disco no arquivo `contatos.txt` utilizando o formato `nome;celular;email`.
-- **Conceitos Trabalhados:** Criação da classe `Persistencia`, uso da API `java.io`, escrita e leitura de arquivo, carregamento automático ao iniciar e salvamento ao encerrar a aplicação.
+Introdução da persistência de dados em disco no arquivo `contatos.txt` (`nome;celular;email`) utilizando a classe `Persistencia` e a API `java.io`.
 
 #### `v1.1.1` — Correção do Fluxo de Saída
 Versão de ajuste da série `v1.x`, corrigindo o comportamento da opção Sair e o fluxo de encerramento da aplicação.
@@ -171,7 +149,7 @@ Evolução para armazenar vários contatos com capacidade fixa utilizando arrays
 Primeira versão procedural em console utilizando `Scanner`, estruturas condicionais, estruturas de repetição, menu de opções e armazenamento de apenas um contato em memória.
 
 ### 🗺️ Próxima Evolução (Roadmap)
-- **`V4` — Padrão DAO:** Separação da lógica de acesso aos dados, preparando a aplicação para evoluções futuras nos mecanismos de persistência.
+- **`v4.1.0` — DAO Orientado a Objetos:** Substituição dos métodos estáticos do DAO por métodos de instância, aprimorando o encapsulamento e a gestão de dependências entre classes.
 - **Versões Posteriores:** Padrão **MVC**, interface gráfica (**JavaFX/FXML**), integração **JDBC** e banco de dados **MySQL**.
 
 ### 🏷️ Controle de Versões
@@ -194,6 +172,8 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
   - v3.1.0
   - v3.2.0
   - v3.3.0
+- v4
+  - v4.0.0
 ```
 
 ---
@@ -202,9 +182,9 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
 
 | Categoria | Tecnologia | Descrição |
 | :--- | :--- | :--- |
-| **Linguagem** | Java 17+ | Linguagem principal orientada a objetos (POO, encapsulamento, construtores) |
+| **Linguagem** | Java 17+ | Linguagem principal orientada a objetos (POO, pacotes, encapsulamento) |
 | **Coleções** | Java Collections Framework | Estruturas dinâmicas (`List` e `ArrayList`) |
-| **Persistência em Arquivo** | Java I/O (`java.io`) | Leitura e gravação de contatos em arquivos `.txt` |
+| **Persistência em Arquivo** | Java I/O (`java.io`) | Leitura e gravação de contatos em arquivos `.txt` via `ContatoDAO` |
 | **Interface Gráfica** | JavaFX (FXML) | Construção das telas e componentes visuais (`02-agenda-contatos.fxml`) |
 | **Banco de Dados** | MySQL | Armazenamento relacional dos contatos e categorias |
 | **Persistência Relacional** | JDBC | Conexão e execução de operações SQL nativas |
@@ -221,6 +201,12 @@ AGENDA_DE_CONTATOS/
 ├── ⚖️ LICENSE
 ├── 🚫 .gitignore
 ├── 💻 src/
+│   └── 📦 br/edu/
+│       ├── 🚀 principal/
+│       ├── 🧩 modelo/
+│       ├── ⚙️ servico/
+│       ├── 💾 dao/
+│       └── 🛠️ uteis/
 ├── 🎨 resources/
 │   ├── 🔹 icons/
 │   └── 🖼️ images/

@@ -34,7 +34,7 @@ Na sua versão final, o módulo oferece uma solução prática e intuitiva para 
 
 - 🎨 **Interface Temática em Pixel Art:** Proporcionar uma experiência gráfica imersiva alinhada à paleta de cores oficial da Prosa Code.
 
-- 🧩 **Evolução Incremental em POO:** Partir de uma estrutura procedural básica e evoluir progressivamente para a aplicação prática de classes e objetos, encapsulamento, herança, polimorfismo, padrões arquiteturais (DAO/MVC), interface gráfica (JavaFX/FXML) e persistência de dados (arquivos e banco de dados relacional MySQL).
+- 🧩 **Evolução Incremental em POO:** Partir de uma estrutura procedural básica e evoluir progressivamente para a aplicação prática de classes e objetos, coleções tipadas, encapsulamento, herança, polimorfismo, padrões arquiteturais (DAO/MVC), interface gráfica (JavaFX/FXML) e persistência de dados (arquivos e banco de dados relacional MySQL).
 
 ---
 
@@ -52,19 +52,25 @@ Cada versão introduz novos conceitos, estruturas de dados e melhorias arquitetu
 | **`v1.1.0`** | List + ArrayList | Separação das responsabilidades e métodos em arquivos/classes utilitárias |
 | **`v1.1.1`** | List + ArrayList | Correção de bug no fluxo de encerramento do sistema (opção Sair) |
 | **`v2.1.0`** | Arquivo TXT (I/O Java) | Persistência de dados em arquivo texto utilizando `java.io` |
-| **`v3.0.0`** *(Atual)* | Classe e Objetos | Introdução à Programação Orientada a Objetos com a criação da classe `Contato` |
+| **`v3.0.0`** | Classes e Objetos | Introdução à Programação Orientada a Objetos com a criação da classe `Contato` |
+| **`v3.1.0`** *(Atual)* | Coleção de Objetos | Armazenamento de objetos `Contato` utilizando `List<Contato>` |
 
-### 📌 Versão Atual: `v3.0.0` — Introdução a Classes e Objetos
-Início da transição da abordagem procedural para a **Programação Orientada a Objetos (POO)**. Nesta versão é criada a classe `Contato`, permitindo representar um contato como uma entidade do sistema e agrupar suas informações em um único objeto.
+### 📌 Versão Atual: `v3.1.0` — Coleção de Objetos
+Evolução da representação dos contatos utilizando uma coleção de objetos do tipo `Contato`. Nesta versão, os conceitos de `List` e `ArrayList`, já utilizados anteriormente com `String`, são aplicados à classe `Contato`, permitindo armazenar vários contatos em uma única coleção.
 
 - **Principais Características e Conceitos:**
-  - Introdução ao paradigma de Programação Orientada a Objetos e comparação com a abordagem procedural;
-  - Identificação e modelagem da entidade `Contato` com os atributos `nome`, `celular` e `email`;
-  - Criação e instanciação de objetos utilizando o operador `new`;
-  - Acesso aos atributos e criação de diferentes instâncias a partir da mesma classe;
-  - Introdução aos conceitos de referência e estado de um objeto.
+  - Revisão de `List`, `ArrayList` e Generics;
+  - Criação de uma coleção `List<Contato>` e armazenamento de objetos com `add()`;
+  - Recuperação e percurso da coleção utilizando `get()` e `for-each`;
+  - Acesso aos atributos dos objetos armazenados e introdução ao conceito de referência de objetos em coleções;
+  - Comparação entre listas paralelas de `String` e uma única coleção de objetos, representando cada contato como uma entidade completa.
 
 ### 📜 Histórico de Versões
+
+#### `v3.0.0` — Introdução a Classes e Objetos
+Início da transição da abordagem procedural para a **Programação Orientada a Objetos (POO)**, criando a classe `Contato` para representar um contato como uma entidade única do sistema.
+- **Modelagem:** Identificação e criação da classe `Contato` com os atributos `nome`, `celular` e `email`.
+- **Conceitos Trabalhados:** Comparação entre abordagem procedural e orientada a objetos, instanciação de objetos com `new`, acesso a atributos, múltiplas instâncias, referência e estado de um objeto.
 
 #### `v2.1.0` — Persistência de Dados em Arquivo Texto (TXT)
 Introdução da **persistência de dados** em disco no formato `.txt`.
@@ -120,6 +126,7 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
   - v2.1.0
 - v3
   - v3.0.0
+  - v3.1.0
 ```
 
 ---

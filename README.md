@@ -18,7 +18,7 @@
 
 A **Agenda de Contatos** é um módulo desktop de gestão de contatos pessoais e profissionais desenvolvido como parte do ecossistema de sistemas da **Prosa Code**, além de atuar como um projeto didático incremental para acompanhar a evolução dos conceitos trabalhados na disciplina de **Programação Orientada a Objetos (POO)**.
 
-O sistema é desenvolvido de forma incremental — iniciando com uma solução procedural simples em console e evoluindo gradualmente, versão a versão, para uma aplicação completa organizada com princípios de POO, persistência relacional e uma interface gráfica rica em estilo *pixel art*, inspirada na estética botânica e acolhedora de cafés.
+O sistema é desenvolvido de forma incremental — iniciando com uma solução procedural simples em console e evoluindo gradualmente, versão a versão, para uma aplicação completa organizada com princípios de POO, persistência de dados e uma interface gráfica rica em estilo *pixel art*, inspirada na estética botânica e acolhedora de cafés.
 
 Na sua versão final, o módulo oferece uma solução prática e intuitiva para organização de rede de contatos, permitindo a filtragem rápida por categorias (*Favoritos*, *Amigos*, *Família*, *Trabalho*), busca dinâmica e navegação por índice alfabético (A-Z).
 
@@ -34,7 +34,7 @@ Na sua versão final, o módulo oferece uma solução prática e intuitiva para 
 
 - 🎨 **Interface Temática em Pixel Art:** Proporcionar uma experiência gráfica imersiva alinhada à paleta de cores oficial da Prosa Code.
 
-- 🧩 **Evolução Incremental em POO:** Partir de uma estrutura procedural básica e evoluir progressivamente para a aplicação prática de encapsulamento, herança, polimorfismo, padrões arquiteturais (DAO/MVC), interface gráfica (JavaFX/FXML) e persistência de dados via JDBC com MySQL.
+- 🧩 **Evolução Incremental em POO:** Partir de uma estrutura procedural básica e evoluir progressivamente para a aplicação prática de encapsulamento, herança, polimorfismo, padrões arquiteturais (DAO/MVC), interface gráfica (JavaFX/FXML) e persistência de dados (arquivos e banco de dados relacional MySQL).
 
 ---
 
@@ -42,64 +42,72 @@ Na sua versão final, o módulo oferece uma solução prática e intuitiva para 
 
 Cada versão introduz novos conceitos, estruturas de dados e melhorias arquiteturais sobre a entrega anterior:
 
-| Versão | Armazenamento | Descrição |
+| Versão | Armazenamento / Recursos | Descrição |
 | :--- | :--- | :--- |
-| **`v0.0.0`** | Variáveis simples | Permite armazenar apenas um contato |
+| **`v0.0.0`** | Variáveis simples | Permite armazenar apenas um contato em memória |
 | **`v0.1.0`** | Arrays | Permite vários contatos com capacidade fixa |
 | **`v0.2.0`** | List + ArrayList | Permite vários contatos com tamanho dinâmico |
 | **`v0.3.0`** | List + ArrayList | Adiciona a opção de alteração de contatos cadastrados |
-| **`v1.0.0`** | List + ArrayList | Modularização das funcionalidades em métodos |
-| **`v1.1.0`** *(Atual)* | List + ArrayList | Modularização das funcionalidades em arquivos separados (`Uteis` e `Agenda`) |
+| **`v1.0.0`** | List + ArrayList | Modularização das funcionalidades em métodos na classe principal |
+| **`v1.1.0`** | List + ArrayList | Separação em classes utilitárias e correção do encerramento do sistema (opção Sair) |
+| **`v2.1.0`** *(Atual)* | Arquivo TXT (I/O Java) | Persistência de dados em arquivo texto utilizando `java.io` |
 
-### 📌 Versão Atual: `v1.1.0` — Modularização em Arquivos Separados (`Uteis` e `Agenda`)
-Nesta etapa, o projeto Agenda de Contatos evoluiu a organização estrutural do código ao separar as funcionalidades e utilitários em arquivos distintos (`Uteis` e `Agenda`), promovendo maior coesão e facilidade de manutenção.
+### 📌 Versão Atual: `v2.1.0` — Persistência de Dados em Arquivo Texto (TXT)
+Nesta etapa, o projeto introduz a **persistência de dados**. Os contatos cadastrados deixam de ser perdidos ao encerrar a aplicação e passam a ser gravados em disco em arquivo texto formato `.txt`.
+
+- **Principais Características e Conceitos:**
+  - Leitura e escrita de dados em disco utilizando a API `java.io`;
+  - Representação e verificação do arquivo com `File`;
+  - Leitura estruturada linha a linha com `FileReader` e `BufferedReader`;
+  - Gravação e manipulação de fluxo de escrita com `FileWriter` e `PrintWriter`;
+  - Carregamento automático dos contatos ao iniciar a aplicação;
+  - Atualização e sincronização do arquivo texto nas operações de inserção, alteração e exclusão;
+  - Tratamento de exceções de entrada e saída (`IOException`).
 
 ### 📜 Histórico de Versões
 
-#### `v1.0.0` — Modularização das Funcionalidades
-Reorganização do código procedural por meio da criação de métodos, mantendo as funcionalidades da `v0.3.0`.
-- **Principais Alterações:** Criação dos métodos `adicionar()`, `listar()`, `pesquisar()`, `atualizar()` e `excluir()`, simplificação do `switch-case`, uso de parâmetros para compartilhamento de dados e organização do método `main()`.
-- **Armazenamento:** Três listas do tipo `List<String>` (`nomes`, `celulares` e `e-mails`).
-- **Conceitos Trabalhados:** Métodos, parâmetros, argumentos, retorno, `void`, escopo de variáveis, modularização e refatoração.
+#### `v1.1.0` — Modularização em Múltiplos Arquivos e Ajustes de Fluxo
+Organização e separação das responsabilidades em diferentes arquivos do projeto, consolidando também os ajustes de encerramento da série `v1.x`.
+- **Principais Alterações:** Criação de classes dedicadas para auxílio e gerenciamento da agenda (`Uteis`, `Agenda`), divisão entre a interface com o usuário (menu no console) e a lógica de processamento dos dados, além da correção no encerramento da execução da aplicação (opção de saída do menu) e fechamento adequado do `Scanner`.
 
-#### `v0.3.0` — Alteração de Contatos
+#### `v1.0.0` — Modularização com Métodos
+Reorganização do código procedural em funções/métodos na mesma classe.
+- **Principais Alterações:** Criação dos métodos `adicionar()`, `listar()`, `pesquisar()`, `atualizar()` e `excluir()`, simplificação da estrutura do `switch-case` no `main()` e passagem de dados via parâmetros e argumentos.
+- **Conceitos Trabalhados:** Escopo de variáveis, retornos (`void`) e refatoração.
+
+#### `v0.3.0` — Atualização de Registros
 Quarta versão da Agenda, adicionando edição de registros existentes.
-- **Funcionalidade:** Nova opção no menu (**Alterar contato**) com busca prévia do registro.
-- **Operações:** Atualização dos dados nas listas (`List` / `ArrayList`) utilizando o método `set()` e reutilização da lógica de validação/busca antes da modificação.
+- **Principais Características:** Nova opção no menu (**Alterar contato**), busca prévia do registro a ser modificado e atualização das listas utilizando o método `set()`.
 
 #### `v0.2.0` — Armazenamento Dinâmico com ArrayList
 Terceira versão da Agenda, adotando coleções dinâmicas do Java.
-- **Armazenamento:** Uso da API de Coleções do Java (`List` e `ArrayList`) com Generics (`<String>`) e redimensionamento dinâmico.
-- **Operações:** Uso dos métodos da API (`add`, `get`, `remove`, `size`, `indexOf`, etc.), iteração com `for-each` e simplificação de inserção, busca e remoção.
+- **Principais Características:** Uso da API de Coleções do Java (`List` e `ArrayList`) com Generics (`<String>`), alocação e redimensionamento dinâmico, métodos da API (`add`, `get`, `remove`, `size`, `indexOf`) e iteração com `for-each`.
 
 #### `v0.1.0` — Arrays e Capacidade Fixa
 Segunda versão da Agenda, expandindo a capacidade de armazenamento em memória.
-- **Armazenamento:** Uso de arrays simples (`String[]`) para cada atributo com capacidade máxima pré-definida.
-- **Manipulação:** Controle através de índices e estrutura `for`.
-- **Operações:** Busca sequencial nos arrays e remoção de elementos com reorganização física (deslocamento de itens).
+- **Principais Características:** Uso de arrays simples (`String[]`) para cada atributo com controle de capacidade máxima pré-definida, manipulação através de índices e estrutura `for`, busca sequencial e reorganização física do array na remoção.
 
 #### `v0.0.0` — Programação Procedural Básica
 Primeira versão funcional da agenda executada em console.
-- **Estrutura:** Uma única classe `Principal`, com todo o código concentrado no método `main()`.
-- **Armazenamento:** Variáveis simples (`nome`, `celular` e `email`) capazes de armazenar apenas **um contato** por vez (um novo registro sobrescreve o anterior).
-- **Recursos da Linguagem:** Entrada de dados com `Scanner`, estruturas condicionais (`if-else`, `switch-case`) e laço de repetição (`while`).
-- **Funcionalidades:** Adicionar contato, listar contato, procurar contato, excluir contato e sair.
+- **Principais Características:** Uma única classe `Principal` com todo o código dentro do método `main()`, armazenamento de apenas um contato nas variáveis `nome`, `celular` e `email`, menu interativo via console (`Scanner`, `if-else`, `switch-case`, `while`) e funcionalidades básicas (Adicionar, Listar, Procurar, Excluir e Sair).
 
 ### 🗺️ Próximas Versões (Roadmap)
-- **Versões Posteriores** — Introdução de classes e objetos, encapsulamento, padrões **DAO** e **MVC**, interface gráfica (**JavaFX**), integração **JDBC** e banco de dados **MySQL**.
+- **Versões Posteriores** — Introdução de classes e objetos de domínio, encapsulamento, padrões **DAO** e **MVC**, interface gráfica (**JavaFX/FXML**), integração **JDBC** e banco de dados **MySQL**.
 
 ### 🏷️ Controle de Versões
 As entregas estáveis do projeto são identificadas no repositório por meio de **tags Git**:
 
 ```text
-- V0
-  - V0.0.0
-  - V0.1.0
-  - V0.2.0
-  - V0.3.0
-- V1
-  - V1.0.0
-  - V1.1.0
+- v0
+  - v0.0.0
+  - v0.1.0
+  - v0.2.0
+  - v0.3.0
+- v1
+  - v1.0.0
+  - v1.1.0
+- v2
+  - v2.1.0
 ```
 
 ---
@@ -109,9 +117,10 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
 | Categoria | Tecnologia | Descrição |
 | :--- | :--- | :--- |
 | **Linguagem** | Java 17+ | Linguagem principal orientada a objetos |
+| **Persistência em Arquivo** | Java I/O (`java.io`) | Leitura e gravação de contatos em arquivos `.txt` |
 | **Interface Gráfica** | JavaFX (FXML) | Construção das telas e componentes visuais (`02-agenda-contatos.fxml`) |
 | **Banco de Dados** | MySQL | Armazenamento relacional dos contatos e categorias |
-| **Persistência** | JDBC | Conexão e execução de operações SQL nativas |
+| **Persistência Relacional** | JDBC | Conexão e execução de operações SQL nativas |
 | **Modelagem & Design** | Pixel Art UI / Scene Builder | Design visual temático e montagem dos componentes visuais |
 | **Controle de Versão** | Git / GitHub | Gestão do código-fonte, releases (tags) e documentação do repositório |
 

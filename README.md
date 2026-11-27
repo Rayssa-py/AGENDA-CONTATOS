@@ -42,60 +42,59 @@ Na sua versão final, o módulo oferece uma solução prática e intuitiva para 
 
 ## 🚀 Evolução do Projeto
 
-### 📌 Versão Atual: `v5.0.0` — Introdução ao Padrão MVC
-Nesta versão, introduzimos o padrão arquitetural **MVC (Model-View-Controller)**, aprimorando a organização da aplicação por meio da separação entre apresentação, controle e manipulação dos dados — substituindo a antiga classe `Agenda` pelos componentes dedicados `AgendaView` e `AgendaController`.
+### 📌 Versão Atual: `v5.1.0` — MVC Completo
+Nesta versão, consolidamos a implementação do padrão arquitetural **MVC (Model-View-Controller)** introduzido na `v5.0.0`. Anteriormente, a classe `Principal` ainda controlava o menu e coordenava as chamadas entre View e Controller; agora, toda a interação com o usuário foi centralizada em `AgendaView` (absorvendo as responsabilidades da antiga classe `Uteis`), simplificando `Principal` e aprimorando o desacoplamento entre as camadas.
 
 - **Principais Alterações:**
-  - Criação dos pacotes `br.edu.visao` (`AgendaView`) e `br.edu.controle` (`AgendaController`) e remoção da classe `Agenda`;
-  - Separação entre entrada de dados, processamento das operações e apresentação dos resultados no terminal;
-  - Reutilização dos métodos de pesquisa nas operações de atualização e exclusão;
-  - Integração dos componentes MVC na classe `Principal` mantendo a persistência em arquivos via `ContatoDAO`.
-- **Conceitos Trabalhados:** Padrão arquitetural MVC, separação de responsabilidades, organização em camadas, encapsulamento, construtores, injeção de dependências por construtor, compartilhamento de referências, retorno de objetos e coleções, reutilização de métodos, refatoração e integração entre MVC e DAO.
+  - Transferência do controle do menu e das interações de apresentação de `Uteis` e `Principal` para `AgendaView` (remoção de métodos e classes obsoletas);
+  - Associação entre `AgendaView` e `AgendaController` via construtor e criação de métodos dedicados para executar cada operação do CRUD na View;
+  - Refinamento dos métodos de `AgendaController` com reutilização da pesquisa nas operações de atualização e exclusão;
+  - Manutenção da persistência em arquivos TXT utilizando `ContatoDAO`, validando a separação de responsabilidades e testes de regressão.
+- **Conceitos Trabalhados:** Padrão arquitetural MVC, separação de responsabilidades, princípio da responsabilidade única, baixo acoplamento, associação entre objetos, injeção de dependências por construtor, encapsulamento, compartilhamento de referências, reutilização de métodos, refatoração, integração entre MVC e DAO, persistência em arquivos, tratamento de exceções, testes de regressão e validação arquitetural.
 
-#### Organização MVC (`v5.0.0`)
+#### Organização MVC (`v5.1.0`)
 
 | Componente | Responsabilidade | Implementação |
 | :--- | :--- | :--- |
-| **Model** | Representar e gerenciar os dados | `Contato` e acesso aos dados por `ContatoDAO` |
-| **View** | Receber informações e apresentar resultados | `AgendaView` |
-| **Controller** | Coordenar as operações solicitadas | `AgendaController` |
+| **Model** | Representar os dados da aplicação | `Contato` |
+| **View** | Receber informações, controlar o menu e apresentar resultados | `AgendaView` |
+| **Controller** | Executar as operações sobre os contatos | `AgendaController` |
 
 | Classe | Responsabilidade |
 | :--- | :--- |
-| **`Principal`** | Inicializar os componentes e coordenar a execução da aplicação |
+| **`Principal`** | Inicializar e conectar os componentes da aplicação |
 | **`Contato`** | Representar os dados de um contato (`nome`, `celular`, `email`) — *Model* |
-| **`AgendaView`** | Receber informações do usuário e apresentar os resultados — *View* |
-| **`AgendaController`** | Coordenar as operações do CRUD — *Controller* |
+| **`AgendaView`** | Controlar o menu, receber informações e apresentar resultados — *View* |
+| **`AgendaController`** | Executar as operações do CRUD e coordenar a persistência — *Controller* |
 | **`ContatoDAO`** | Realizar a leitura e gravação dos contatos em arquivo (`contatos.txt`) — *DAO* |
-| **`Uteis`** | Disponibilizar funcionalidades auxiliares da aplicação |
 
 ```java
-// Inicialização dos componentes MVC e DAO na classe Principal
+// Inicialização e conexão dos componentes na classe Principal
 List<Contato> contatos = new ArrayList<>();
 
 ContatoDAO dao = new ContatoDAO("contatos.txt");
 dao.carregarContatos(contatos);
 
-Scanner sc = new Scanner(System.in);
-
-AgendaView view = new AgendaView(sc);
 AgendaController controller = new AgendaController(contatos, dao);
 
-// Fluxo de inclusão (View -> Controller -> View)
-Contato contato = view.lerContato();
-controller.adicionarContato(contato);
-view.mostrarMensagem("Contato adicionado com sucesso!");
+Scanner sc = new Scanner(System.in);
+AgendaView view = new AgendaView(sc, controller);
 
-// Fluxo de listagem (Controller -> View)
-List<Contato> lista = controller.listarContatos();
-view.mostrarContatos(lista);
+view.iniciar();
+sc.close();
+```
 
-// Persistência ao encerrar
-boolean salvou = controller.salvarContatos();
+```java
+// Exemplo de fluxo na AgendaView (Inclusão)
+public void executarInclusao() {
+    Contato contato = lerContato();
+    controller.adicionarContato(contato);
+    mostrarMensagem("Contato adicionado com sucesso!");
+}
 ```
 
 #### Persistência dos Dados (`contatos.txt`)
-Os contatos são armazenados no arquivo `contatos.txt` (criado automaticamente durante a gravação, caso ainda não exista) utilizando `;` como separador. Ao iniciar, os registros são carregados para a coleção em memória; ao sair, o Controller solicita ao DAO a gravação — caso ocorra erro, uma mensagem é exibida e a aplicação permanece em execução.
+Os contatos são armazenados no arquivo `contatos.txt` (criado automaticamente durante a gravação, caso ainda não exista) utilizando `;` como separador. Ao iniciar, os registros são carregados para a memória; ao selecionar sair, `AgendaView` solicita ao `AgendaController` a gravação, que encaminha ao `ContatoDAO` — caso ocorra erro, uma mensagem é exibida e a aplicação permanece em execução.
 
 ```text
 Maria;85999999999;maria@email.com
@@ -121,11 +120,12 @@ João;85988888888;joao@email.com
 | **`v3.3.0`** | Encapsulamento e aprimoramento da classe `Contato` |
 | **`v4.0.0`** | Introdução ao padrão DAO e organização em pacotes |
 | **`v4.1.0`** | DAO orientado a objetos, com construtor e métodos de instância |
-| **`v5.0.0`** *(Atual)* | Introdução ao padrão MVC e separação entre Model, View e Controller |
+| **`v5.0.0`** | Introdução ao padrão MVC e separação entre Model, View e Controller |
+| **`v5.1.0`** *(Atual)* | Consolidação do MVC, centralização das interações na View e simplificação da classe `Principal` |
 
 ### 🗺️ Próxima Evolução (Roadmap)
-- **`v5.1.0` — MVC Completo:** Aprimorar a implementação do padrão MVC, reduzindo as responsabilidades ainda concentradas na classe `Principal` e transferindo as interações restantes da classe `Uteis` para a View, preparando a arquitetura para interfaces gráficas.
-- **Versões Posteriores:** Interface gráfica (**JavaFX/FXML**), integração **JDBC** e banco de dados **MySQL**.
+- **`v6.0.0` — JDBC + MySQL:** Substituir a persistência em arquivos TXT pelo banco de dados relacional **MySQL** utilizando **JDBC (Java Database Connectivity)**, adaptando `ContatoDAO` para comandos SQL sem precisar reescrever a interface ou a lógica de interação com o usuário.
+- **Versões Posteriores:** Interface gráfica (**JavaFX/FXML**) integrada ao ecossistema visual da Prosa Code.
 
 ### 🏷️ Controle de Versões
 As entregas estáveis do projeto são identificadas no repositório por meio de **tags Git**:
@@ -153,6 +153,7 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
   - v4.1.0
 - v5
   - v5.0.0
+  - v5.1.0
 ```
 
 ---
@@ -173,7 +174,7 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
 | Categoria | Tecnologia | Descrição |
 | :--- | :--- | :--- |
 | **Linguagem** | Java 17+ | Linguagem principal orientada a objetos (POO, pacotes, encapsulamento, construtores) |
-| **Arquitetura** | Padrões MVC e DAO | Separação entre Model, View, Controller e persistência desacoplada |
+| **Arquitetura** | Padrões MVC e DAO | Separação completa entre Model, View, Controller e persistência desacoplada |
 | **Coleções** | Java Collections Framework | Estruturas dinâmicas (`List` e `ArrayList`) |
 | **Persistência em Arquivo** | Java I/O (`java.io`) | Manipulação de arquivos `.txt` e tratamento de exceções via `ContatoDAO` |
 | **Interface Gráfica** | JavaFX (FXML) | Construção das telas e componentes visuais (`02-agenda-contatos.fxml`) |
@@ -202,10 +203,8 @@ AGENDA_DE_CONTATOS/
 │       │   └── ☕ AgendaView.java
 │       ├── 🎮 controle/
 │       │   └── ☕ AgendaController.java
-│       ├── 💾 dao/
-│       │   └── ☕ ContatoDAO.java
-│       └── 🛠️ uteis/
-│           └── ☕ Uteis.java
+│       └── 💾 dao/
+│           └── ☕ ContatoDAO.java
 ├── 🎨 resources/
 │   ├── 🔹 icons/
 │   └── 🖼️ images/

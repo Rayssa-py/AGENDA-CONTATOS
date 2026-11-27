@@ -36,49 +36,71 @@ Na sua versão final, o módulo oferece uma solução prática e intuitiva para 
 
 - 🎨 **Interface Temática em Pixel Art:** Proporcionar uma experiência gráfica imersiva alinhada à paleta de cores oficial da Prosa Code.
 
-- 🧩 **Evolução Incremental em POO:** Aplicar progressivamente classes e objetos, coleções tipadas, encapsulamento, construtores, pacotes Java, padrões arquiteturais (**DAO** e **MVC**), interface gráfica (**JavaFX/FXML**) e banco de dados (**JDBC/MySQL**).
+- 🧩 **Evolução Incremental em POO:** Aplicar progressivamente classes e objetos, coleções tipadas, encapsulamento, construtores, injeção de dependências, padrões arquiteturais (**DAO** e **MVC**), interface gráfica (**JavaFX/FXML**) e banco de dados (**JDBC/MySQL**).
 
 ---
 
 ## 🚀 Evolução do Projeto
 
-### 📌 Versão Atual: `v4.1.0` — DAO Orientado a Objetos
-Aprimoramento da implementação do padrão **DAO (Data Access Object)** introduzido na `v4.0.0`. Os métodos estáticos de persistência foram convertidos em métodos de instância configurados via construtor.
+### 📌 Versão Atual: `v5.0.0` — Introdução ao Padrão MVC
+Nesta versão, introduzimos o padrão arquitetural **MVC (Model-View-Controller)**, aprimorando a organização da aplicação por meio da separação entre apresentação, controle e manipulação dos dados — substituindo a antiga classe `Agenda` pelos componentes dedicados `AgendaView` e `AgendaController`.
 
 - **Principais Alterações:**
-  - Introdução do atributo privado `caminhoArquivo` e implementação de construtor para configurar o arquivo utilizado;
-  - Conversão dos métodos estáticos de `ContatoDAO` em métodos de instância e atualização da classe `Principal` para instanciar o DAO;
-  - Refinamento do método `toString()` da classe `Contato`;
-  - Melhoria no tratamento de erros durante a gravação e implementação de retorno `boolean` no método `salvarContatos()`.
-- **Conceitos Trabalhados:** Classes e objetos, instanciação com `new`, construtores, encapsulamento, palavra-chave `this`, métodos estáticos vs. métodos de instância, compartilhamento de referências, separação de responsabilidades, persistência em arquivos, tratamento de exceções e retorno de métodos.
+  - Criação dos pacotes `br.edu.visao` (`AgendaView`) e `br.edu.controle` (`AgendaController`) e remoção da classe `Agenda`;
+  - Separação entre entrada de dados, processamento das operações e apresentação dos resultados no terminal;
+  - Reutilização dos métodos de pesquisa nas operações de atualização e exclusão;
+  - Integração dos componentes MVC na classe `Principal` mantendo a persistência em arquivos via `ContatoDAO`.
+- **Conceitos Trabalhados:** Padrão arquitetural MVC, separação de responsabilidades, organização em camadas, encapsulamento, construtores, injeção de dependências por construtor, compartilhamento de referências, retorno de objetos e coleções, reutilização de métodos, refatoração e integração entre MVC e DAO.
+
+#### Organização MVC (`v5.0.0`)
+
+| Componente | Responsabilidade | Implementação |
+| :--- | :--- | :--- |
+| **Model** | Representar e gerenciar os dados | `Contato` e acesso aos dados por `ContatoDAO` |
+| **View** | Receber informações e apresentar resultados | `AgendaView` |
+| **Controller** | Coordenar as operações solicitadas | `AgendaController` |
+
+| Classe | Responsabilidade |
+| :--- | :--- |
+| **`Principal`** | Inicializar os componentes e coordenar a execução da aplicação |
+| **`Contato`** | Representar os dados de um contato (`nome`, `celular`, `email`) — *Model* |
+| **`AgendaView`** | Receber informações do usuário e apresentar os resultados — *View* |
+| **`AgendaController`** | Coordenar as operações do CRUD — *Controller* |
+| **`ContatoDAO`** | Realizar a leitura e gravação dos contatos em arquivo (`contatos.txt`) — *DAO* |
+| **`Uteis`** | Disponibilizar funcionalidades auxiliares da aplicação |
 
 ```java
+// Inicialização dos componentes MVC e DAO na classe Principal
 List<Contato> contatos = new ArrayList<>();
 
 ContatoDAO dao = new ContatoDAO("contatos.txt");
-
-// Carregar os contatos
 dao.carregarContatos(contatos);
 
-// Salvar os contatos
-boolean salvou = dao.salvarContatos(contatos);
+Scanner sc = new Scanner(System.in);
+
+AgendaView view = new AgendaView(sc);
+AgendaController controller = new AgendaController(contatos, dao);
+
+// Fluxo de inclusão (View -> Controller -> View)
+Contato contato = view.lerContato();
+controller.adicionarContato(contato);
+view.mostrarMensagem("Contato adicionado com sucesso!");
+
+// Fluxo de listagem (Controller -> View)
+List<Contato> lista = controller.listarContatos();
+view.mostrarContatos(lista);
+
+// Persistência ao encerrar
+boolean salvou = controller.salvarContatos();
 ```
 
-#### Persistência e Estrutura de Pacotes (`v4.1.0`)
-Os contatos são armazenados no arquivo `contatos.txt` (criado automaticamente durante a gravação, caso ainda não exista) utilizando `;` como separador. Ao iniciar, os registros são carregados para a memória; ao sair, os dados atualizados são salvos — caso ocorra erro na gravação, uma mensagem é exibida e a aplicação permanece em execução.
+#### Persistência dos Dados (`contatos.txt`)
+Os contatos são armazenados no arquivo `contatos.txt` (criado automaticamente durante a gravação, caso ainda não exista) utilizando `;` como separador. Ao iniciar, os registros são carregados para a coleção em memória; ao sair, o Controller solicita ao DAO a gravação — caso ocorra erro, uma mensagem é exibida e a aplicação permanece em execução.
 
 ```text
 Maria;85999999999;maria@email.com
 João;85988888888;joao@email.com
 ```
-
-| Classe | Responsabilidade |
-| :--- | :--- |
-| **`Principal`** | Inicializar e coordenar a execução da aplicação |
-| **`Contato`** | Representar e encapsular os dados de um contato (`nome`, `celular`, `email`) |
-| **`Agenda`** | Implementar as operações do CRUD |
-| **`ContatoDAO`** | Realizar a leitura e gravação dos contatos em arquivo (`contatos.txt`) |
-| **`Uteis`** | Disponibilizar funcionalidades auxiliares da aplicação |
 
 ### 📜 Histórico Completo de Versões
 
@@ -98,10 +120,11 @@ João;85988888888;joao@email.com
 | **`v3.2.0`** | CRUD utilizando objetos |
 | **`v3.3.0`** | Encapsulamento e aprimoramento da classe `Contato` |
 | **`v4.0.0`** | Introdução ao padrão DAO e organização em pacotes |
-| **`v4.1.0`** *(Atual)* | DAO orientado a objetos, com construtor e métodos de instância |
+| **`v4.1.0`** | DAO orientado a objetos, com construtor e métodos de instância |
+| **`v5.0.0`** *(Atual)* | Introdução ao padrão MVC e separação entre Model, View e Controller |
 
 ### 🗺️ Próxima Evolução (Roadmap)
-- **`v5.0.0` — Introdução ao MVC:** Introdução do padrão arquitetural **Model-View-Controller (MVC)**, aprimorando a separação entre os dados, a apresentação e o controle das operações da aplicação.
+- **`v5.1.0` — MVC Completo:** Aprimorar a implementação do padrão MVC, reduzindo as responsabilidades ainda concentradas na classe `Principal` e transferindo as interações restantes da classe `Uteis` para a View, preparando a arquitetura para interfaces gráficas.
 - **Versões Posteriores:** Interface gráfica (**JavaFX/FXML**), integração **JDBC** e banco de dados **MySQL**.
 
 ### 🏷️ Controle de Versões
@@ -128,6 +151,8 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
 - v4
   - v4.0.0
   - v4.1.0
+- v5
+  - v5.0.0
 ```
 
 ---
@@ -135,7 +160,7 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
 ## ▶️ Como Executar
 
 1. Instalar o **Java JDK** (17 ou superior).
-2. Abrir o projeto em uma IDE Java de sua preferência.
+2. Abrir o projeto em uma IDE Java (como o Eclipse).
 3. Localizar a classe `Principal`, no pacote `br.edu.principal`.
 4. Executar o método `main()` e utilizar o menu apresentado no terminal.
 
@@ -148,6 +173,7 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
 | Categoria | Tecnologia | Descrição |
 | :--- | :--- | :--- |
 | **Linguagem** | Java 17+ | Linguagem principal orientada a objetos (POO, pacotes, encapsulamento, construtores) |
+| **Arquitetura** | Padrões MVC e DAO | Separação entre Model, View, Controller e persistência desacoplada |
 | **Coleções** | Java Collections Framework | Estruturas dinâmicas (`List` e `ArrayList`) |
 | **Persistência em Arquivo** | Java I/O (`java.io`) | Manipulação de arquivos `.txt` e tratamento de exceções via `ContatoDAO` |
 | **Interface Gráfica** | JavaFX (FXML) | Construção das telas e componentes visuais (`02-agenda-contatos.fxml`) |
@@ -172,8 +198,10 @@ AGENDA_DE_CONTATOS/
 │       │   └── ☕ Principal.java
 │       ├── 🧩 modelo/
 │       │   └── ☕ Contato.java
-│       ├── ⚙️ servico/
-│       │   └── ☕ Agenda.java
+│       ├── 🖥️ visao/
+│       │   └── ☕ AgendaView.java
+│       ├── 🎮 controle/
+│       │   └── ☕ AgendaController.java
 │       ├── 💾 dao/
 │       │   └── ☕ ContatoDAO.java
 │       └── 🛠️ uteis/

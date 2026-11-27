@@ -48,19 +48,19 @@ Cada versão introduz novos conceitos, estruturas de dados e melhorias arquitetu
 | **`v0.1.0`** | Arrays | Permite vários contatos com capacidade fixa |
 | **`v0.2.0`** | List + ArrayList | Permite vários contatos com tamanho dinâmico |
 | **`v0.3.0`** | List + ArrayList | Adiciona a opção de alteração de contatos cadastrados |
-| **`v1.0.0`** *(Atual)* | List + ArrayList | Modularização das funcionalidades em métodos |
+| **`v1.0.0`** | List + ArrayList | Modularização das funcionalidades em métodos |
+| **`v1.1.0`** *(Atual)* | List + ArrayList | Modularização das funcionalidades em arquivos separados (`Uteis` e `Agenda`) |
 
-### 📌 Versão Atual: `v1.0.0` — Modularização das Funcionalidades
-Nesta etapa, o projeto Agenda de Contatos foi reorganizado por meio da criação de métodos, mantendo as funcionalidades da `v0.3.0` enquanto reestrutura a organização interna do código.
-
-- **Principais Alterações:**
-  - Modularização do código procedural com criação dos métodos `adicionar()`, `listar()`, `pesquisar()`, `atualizar()` e `excluir()`;
-  - Simplificação do `switch-case` e organização das responsabilidades do método `main()`;
-  - Uso de parâmetros para compartilhar os dados entre os métodos.
-- **Armazenamento:** Os contatos continuam armazenados em três listas do tipo `List<String>` (`nomes`, `celulares` e `e-mails`).
-- **Conceitos Trabalhados:** Métodos, parâmetros, argumentos, retorno, `void`, escopo de variáveis, modularização e refatoração.
+### 📌 Versão Atual: `v1.1.0` — Modularização em Arquivos Separados (`Uteis` e `Agenda`)
+Nesta etapa, o projeto Agenda de Contatos evoluiu a organização estrutural do código ao separar as funcionalidades e utilitários em arquivos distintos (`Uteis` e `Agenda`), promovendo maior coesão e facilidade de manutenção.
 
 ### 📜 Histórico de Versões
+
+#### `v1.0.0` — Modularização das Funcionalidades
+Reorganização do código procedural por meio da criação de métodos, mantendo as funcionalidades da `v0.3.0`.
+- **Principais Alterações:** Criação dos métodos `adicionar()`, `listar()`, `pesquisar()`, `atualizar()` e `excluir()`, simplificação do `switch-case`, uso de parâmetros para compartilhamento de dados e organização do método `main()`.
+- **Armazenamento:** Três listas do tipo `List<String>` (`nomes`, `celulares` e `e-mails`).
+- **Conceitos Trabalhados:** Métodos, parâmetros, argumentos, retorno, `void`, escopo de variáveis, modularização e refatoração.
 
 #### `v0.3.0` — Alteração de Contatos
 Quarta versão da Agenda, adicionando edição de registros existentes.
@@ -99,6 +99,7 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
   - V0.3.0
 - V1
   - V1.0.0
+  - V1.1.0
 ```
 
 ---

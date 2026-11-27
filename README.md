@@ -34,7 +34,7 @@ Na sua versão final, o módulo oferece uma solução prática e intuitiva para 
 
 - 🎨 **Interface Temática em Pixel Art:** Proporcionar uma experiência gráfica imersiva alinhada à paleta de cores oficial da Prosa Code.
 
-- 🧩 **Evolução Incremental em POO:** Partir de uma estrutura procedural básica e evoluir progressivamente para a aplicação prática de encapsulamento, herança, polimorfismo, padrões arquiteturais (DAO/MVC), interface gráfica (JavaFX/FXML) e persistência de dados (arquivos e banco de dados relacional MySQL).
+- 🧩 **Evolução Incremental em POO:** Partir de uma estrutura procedural básica e evoluir progressivamente para a aplicação prática de classes e objetos, encapsulamento, herança, polimorfismo, padrões arquiteturais (DAO/MVC), interface gráfica (JavaFX/FXML) e persistência de dados (arquivos e banco de dados relacional MySQL).
 
 ---
 
@@ -49,30 +49,39 @@ Cada versão introduz novos conceitos, estruturas de dados e melhorias arquitetu
 | **`v0.2.0`** | List + ArrayList | Permite vários contatos com tamanho dinâmico |
 | **`v0.3.0`** | List + ArrayList | Adiciona a opção de alteração de contatos cadastrados |
 | **`v1.0.0`** | List + ArrayList | Modularização das funcionalidades em métodos na classe principal |
-| **`v1.1.0`** | List + ArrayList | Separação em classes utilitárias e correção do encerramento do sistema (opção Sair) |
-| **`v2.1.0`** *(Atual)* | Arquivo TXT (I/O Java) | Persistência de dados em arquivo texto utilizando `java.io` |
+| **`v1.1.0`** | List + ArrayList | Separação das responsabilidades e métodos em arquivos/classes utilitárias |
+| **`v1.1.1`** | List + ArrayList | Correção de bug no fluxo de encerramento do sistema (opção Sair) |
+| **`v2.1.0`** | Arquivo TXT (I/O Java) | Persistência de dados em arquivo texto utilizando `java.io` |
+| **`v3.0.0`** *(Atual)* | Classe e Objetos | Introdução à Programação Orientada a Objetos com a criação da classe `Contato` |
 
-### 📌 Versão Atual: `v2.1.0` — Persistência de Dados em Arquivo Texto (TXT)
-Nesta etapa, o projeto introduz a **persistência de dados**. Os contatos cadastrados deixam de ser perdidos ao encerrar a aplicação e passam a ser gravados em disco em arquivo texto formato `.txt`.
+### 📌 Versão Atual: `v3.0.0` — Introdução a Classes e Objetos
+Início da transição da abordagem procedural para a **Programação Orientada a Objetos (POO)**. Nesta versão é criada a classe `Contato`, permitindo representar um contato como uma entidade do sistema e agrupar suas informações em um único objeto.
 
 - **Principais Características e Conceitos:**
-  - Leitura e escrita de dados em disco utilizando a API `java.io`;
-  - Representação e verificação do arquivo com `File`;
-  - Leitura estruturada linha a linha com `FileReader` e `BufferedReader`;
-  - Gravação e manipulação de fluxo de escrita com `FileWriter` e `PrintWriter`;
-  - Carregamento automático dos contatos ao iniciar a aplicação;
-  - Atualização e sincronização do arquivo texto nas operações de inserção, alteração e exclusão;
-  - Tratamento de exceções de entrada e saída (`IOException`).
+  - Introdução ao paradigma de Programação Orientada a Objetos e comparação com a abordagem procedural;
+  - Identificação e modelagem da entidade `Contato` com os atributos `nome`, `celular` e `email`;
+  - Criação e instanciação de objetos utilizando o operador `new`;
+  - Acesso aos atributos e criação de diferentes instâncias a partir da mesma classe;
+  - Introdução aos conceitos de referência e estado de um objeto.
 
 ### 📜 Histórico de Versões
 
-#### `v1.1.0` — Modularização em Múltiplos Arquivos e Ajustes de Fluxo
-Organização e separação das responsabilidades em diferentes arquivos do projeto, consolidando também os ajustes de encerramento da série `v1.x`.
-- **Principais Alterações:** Criação de classes dedicadas para auxílio e gerenciamento da agenda (`Uteis`, `Agenda`), divisão entre a interface com o usuário (menu no console) e a lógica de processamento dos dados, além da correção no encerramento da execução da aplicação (opção de saída do menu) e fechamento adequado do `Scanner`.
+#### `v2.1.0` — Persistência de Dados em Arquivo Texto (TXT)
+Introdução da **persistência de dados** em disco no formato `.txt`.
+- **Operações e API:** Leitura e escrita com `java.io` (`File`, `FileReader`, `BufferedReader`, `FileWriter`, `PrintWriter`) e tratamento de `IOException`.
+- **Sincronização:** Carregamento automático ao iniciar a aplicação e atualização nas operações de inserção, alteração e exclusão.
+
+#### `v1.1.1` — Correção de Bug (Hotfix)
+Versão de ajuste e refinamento da série `v1.x`.
+- **Alterações:** Correção de bug no encerramento da execução da aplicação (opção de saída do menu) e garantia do fechamento correto dos fluxos de leitura do `Scanner`.
+
+#### `v1.1.0` — Modularização em Múltiplos Arquivos
+Organização e separação das responsabilidades em diferentes arquivos do projeto.
+- **Alterações:** Criação de classes dedicadas (`Uteis`, `Agenda`) e divisão entre a interface com o usuário (menu no console) e a lógica de processamento dos dados.
 
 #### `v1.0.0` — Modularização com Métodos
 Reorganização do código procedural em funções/métodos na mesma classe.
-- **Principais Alterações:** Criação dos métodos `adicionar()`, `listar()`, `pesquisar()`, `atualizar()` e `excluir()`, simplificação da estrutura do `switch-case` no `main()` e passagem de dados via parâmetros e argumentos.
+- **Alterações:** Criação dos métodos `adicionar()`, `listar()`, `pesquisar()`, `atualizar()` e `excluir()`, simplificação do `switch-case` no `main()` e passagem de dados via parâmetros e argumentos.
 - **Conceitos Trabalhados:** Escopo de variáveis, retornos (`void`) e refatoração.
 
 #### `v0.3.0` — Atualização de Registros
@@ -92,7 +101,7 @@ Primeira versão funcional da agenda executada em console.
 - **Principais Características:** Uma única classe `Principal` com todo o código dentro do método `main()`, armazenamento de apenas um contato nas variáveis `nome`, `celular` e `email`, menu interativo via console (`Scanner`, `if-else`, `switch-case`, `while`) e funcionalidades básicas (Adicionar, Listar, Procurar, Excluir e Sair).
 
 ### 🗺️ Próximas Versões (Roadmap)
-- **Versões Posteriores** — Introdução de classes e objetos de domínio, encapsulamento, padrões **DAO** e **MVC**, interface gráfica (**JavaFX/FXML**), integração **JDBC** e banco de dados **MySQL**.
+- **Versões Posteriores** — Encapsulamento, construtores, padrões **DAO** e **MVC**, interface gráfica (**JavaFX/FXML**), integração **JDBC** e banco de dados **MySQL**.
 
 ### 🏷️ Controle de Versões
 As entregas estáveis do projeto são identificadas no repositório por meio de **tags Git**:
@@ -106,8 +115,11 @@ As entregas estáveis do projeto são identificadas no repositório por meio de 
 - v1
   - v1.0.0
   - v1.1.0
+  - v1.1.1
 - v2
   - v2.1.0
+- v3
+  - v3.0.0
 ```
 
 ---
